@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Online Chat</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <link href="https://cdn.bootcss.com/ionicons/4.5.6/css/ionicons.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/socket.io/2.2.0/socket.io.js"></script>
+  <script src="./js/TemplateEngine.js"></script>
+  <script src="./js/PublishSubscribe.js"></script>
+</head>
+
+<body>
+  <!-- blur -->
+  <div class="app blur">
+    <div class="menu">
+      <div class="top">
+        <div class="cell">
+          <div class="cell-inside">
+            <img src="./resource/images/profile.jpg" alt="" class="proile">
+          </div>
+        </div>
+        <div class="cell">
+          <div class="cell-inside onShow">
+            <i class="icon ion-ios-chatbubbles"></i>
+          </div>
+        </div>
+        <div class="cell">
+          <div class="cell-inside"> <i class="icon ion-ios-contacts"></i>
+          </div>
+        </div>
+        <div class="cell">
+          <div class="cell-inside"> <i class="icon ion-ios-cube"></i>
+          </div>
+        </div>
+      </div>
+      <div class="btm">
+        <div class="cell">
+          <div class="cell-inside"> <i class="icon ion-ios-list"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <div class="search-area">
+        <div class="input input-basic">
+          <div class="icon">
+            <i class="icon ion-ios-search"></i>
+          </div>
+          <input type="text" name="search" id="search" class="search" placeholder="搜索">
+          <div class="icon hide">
+            <i class="icon ion-ios-close-circle"></i>
+          </div>
+        </div>
+        <div class="join input-basic">
+          <i class="icon ion-ios-add"></i>
+        </div>
+      </div>
+      <div class="chatting-list">
+        <!-- <div class="chatting-item selected selectNone">
+          <div class="left">
+            <div class="pic"><img src="./resource/images/profile.jpg" alt="" class="proile"></div>
+            <div class="spot hide"></div>
+          </div>
+          <div class="mid">
+            <p class="name">Community</p>
+            <p class="content"><br /></p>
+          </div>
+          <div class="right">
+            <p class="last-time">13:14</p>
+            <p><br /></p>
+          </div>
+        </div> -->
+        <!-- <div class="chatting-item selected">
+          <div class="left">
+            <div class="pic"><img src="./resource/images/profile.jpg" alt="" class="proile"></div>
+            <div class="spot"></div>
+          </div>
+          <div class="mid">
+            <p class="name">AJie</p>
+            <p class="content">I love you!</p>
+          </div>
+          <div class="right">
+            <p class="last-time">13:14</p>
+          </div>
+        </div>
+        <div class="chatting-item">
+          <div class="left">
+            <div class="pic"><img src="./resource/images/profile.jpg" alt="" class="proile"></div>
+            <div class="spot hide"></div>
+          </div>
+          <div class="mid">
+            <p class="name">AJie</p>
+            <p class="content">I love you!</p>
+          </div>
+          <div class="right">
+            <p class="last-time">13:14</p>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <div class="container">
+      <div class="top half-1px-line">
+        <p class="name" id="roomName"></p>
+        <p class="more"><i class="icon ion-ios-more"></i></p>
+      </div>
+      <div class="msg-container half-1px-line">
+        <div class="msg-item notification"><span>12:12</span></div>
+        <div class="msg-item notification"><span>Kevin has join to this chat room!</span></div>
+        <!-- <div class="msg-item msg me">
+          <div class="img"><img src="./resource/images/profile.jpg" alt=""></div>
+          <div>
+            <p class="itemname">Kevin</p>
+            <div class="msg-content">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa I Love You!!!</div>
+          </div>
+        </div>
+        <div class="msg-item msg not-me">
+          <div class="img"><img src="./resource/images/profile.jpg" alt=""></div>
+          <div>
+            <p class="itemname">Kevin</p>
+            <div class="msg-content">I Love You, too!!!</div>
+          </div>
+        </div> -->
+      </div>
+      <div class="msg-input">
+        <div class="msg-feature">
+          <div class="tools">
+            <div class="tool"><i class="icon ion-ios-happy"></i>
+              <div class="tool-content emoji displayNone">
+                <div class="emoji-container"></div>
+                <div class="switch">
+
+                </div>
+              </div>
+            </div>
+            <div class="tool"><i class="icon ion-ios-folder"></i></div>
+            <div class="tool"><i class="icon ion-ios-cut"></i></div>
+            <div class="tool"><i class="icon ion-ios-chatboxes"></i></div>
+          </div>
+          <div class="callways">
+            <div class="phonecall">
+              <i class="icon ion-ios-call"></i>
+            </div>
+            <div class="videocall">
+              <i class="icon- ion-ios-videocam"></i>
+            </div>
+          </div>
+        </div>
+        <div class="msg-input-box" contenteditable="true">
+          <p><br></p>
+        </div>
+        <div class="msg-sub">
+          <div class="sub-btn">发送(S)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- display: none -->
+  <div class="mask">
+    <div class="wrapper">
+      <div class="input-container">
+        <div class="username-input-box">
+          <div class="label">
+            <i class="icon ion-ios-person"></i>
+          </div>
+          <input type="text" name="" id="username" placeholder="User Name">
+        </div>
+        <div class="password-input-box">
+          <div class="label">
+            <i class="icon ion-ios-lock"></i>
+          </div>
+          <input type="password" name="" id="psw" placeholder="Password">
+        </div>
+      </div>
+      <div class="sub-btns">
+        <div class="btn login-btn">Login in</div>
+        <div class="btn register-btn">Register</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./js/client.js"></script>
+  <script src="./js/socketio.js"></script>
+</body>
+
+</html>
